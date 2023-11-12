@@ -41,27 +41,21 @@ public class GeneticAlgorithm {
 					int delay = TrafficJam.calDelay(tsp, result.get(k), result.get(k + 1), fitness1);
 					fitness2 += tsp.getWeightMatrix()[result.get(k)][result.get(k + 1)] + delay;
 					fitness1 = fitness1.plusMinutes(tsp.getWeightMatrix()[result.get(k)][result.get(k + 1)] + delay);
-
 				} else {
 					fitness2 += 120;
 				}
 			}
 			Fitness.add(fitness2);
 		}
-
 	}
 
 	public static void Selection() {
 		ArrayList<Integer> temp = (ArrayList<Integer>) Fitness.clone();
-
 		Collections.sort(temp);
-
 		int mark = temp.get(individual * 80 / 100);// Chọn làm mốc thời gian
 		int check = individual;
 		for (int i = 0; i < check; i++) {
-
 			while (Fitness.get(i) > mark) {
-
 				results.remove(i);
 				Fitness.remove(i);
 				if (i >= results.size())
@@ -71,8 +65,10 @@ public class GeneticAlgorithm {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void Hybridize(TSPProblem tsp) {
 		while (results.size() != individual) {
+			
 			ArrayList<Integer> dad = (ArrayList<Integer>) results.get(ran.nextInt(results.size())).clone();
 			ArrayList<Integer> mom = (ArrayList<Integer>) results.get(ran.nextInt(results.size())).clone();
 
@@ -96,7 +92,6 @@ public class GeneticAlgorithm {
 			result.add(dad.get(0));
 			results.add(new ArrayList<>(result));
 		}
-
 	}
 
 	public static void Mutate(TSPProblem tsp) {
@@ -114,34 +109,39 @@ public class GeneticAlgorithm {
 			count--;
 		}
 		results.set(pos, (result));
-
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void Print(TSPProblem tsp) {
 		ArrayList<Integer> temp = (ArrayList<Integer>) Fitness.clone();
 		Collections.sort(temp);
 		int best = temp.get(0);
 		for (int i = 0; i < individual; i++) {
 			if (Fitness.get(i) == best)
-				tsp.Showtheway(results.get(i), best);
 
+				tsp.Showtheway(results.get(i), best);
 		}
 
 	}
 
 	public static void main(String[] args) throws IOException {
-		String filename = "C:\\GitHub\\TSPProblem\\data\\data.txt";
+		long before = Clock.systemDefaultZone().millis();
+
+		String filename = "D:\\JP301_NguyenHieu\\BuiltG1\\cmsystem\\src\\main\\java\\TSPProblem\\data\\data1.txt";
 		TSPProblem tsp = TSPFileReader.readTSPProblemFromFile(filename);
 		InitialPopulation(tsp);
 		for (int i = 0; i < 100; i++) {
 			EvulationFitness(tsp);
-			Print(tsp);
 			Selection();
 			Hybridize(tsp);
 			Mutate(tsp);
 		}
+		EvulationFitness(tsp);
+		Print(tsp);
 
+		long after = Clock.systemDefaultZone().millis();
 
+		System.out.println("Thời gian chạy chương trình: " + (float) (after - before) / 1000 + "s");
 	}
 
 }
