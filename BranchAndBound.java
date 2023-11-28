@@ -27,8 +27,10 @@ public class BranchAndBound {
 		LocalTime currTime = tsp.getStartTime();
 		// Thêm bestEndTime
 		bestEndTime = LocalTime.parse("23:59");
+		// Đặt vị trí xét điểm tiếp theo
+		int index = 1;
 		//Gọi hàm giải
-		TSPRecursive(tsp, visisted, currentPath, crpoint, currTime, strpoint, 1);
+		TSPRecursive(tsp, visisted, currentPath, crpoint, currTime, strpoint, index);
 		tsp.Showtheway(bestPath, (int) Duration.between(tsp.getStartTime(), bestEndTime).toMinutes());
 	}
 
@@ -74,7 +76,7 @@ public class BranchAndBound {
 	public static void main(String[] args) {
 		long before = Clock.systemDefaultZone().millis();
 
-		String filename = "D:\\JP301_NguyenHieu\\BuiltG1\\cmsystem\\src\\main\\java\\TSPProblem\\data\\data1.txt";
+		String filename = "C:\\GitHub\\TSPProblem\\data\\data1.txt";
 
 		try {
 			TSPProblem tsp = TSPFileReader.readTSPProblemFromFile(filename);
