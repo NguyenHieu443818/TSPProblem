@@ -27,7 +27,7 @@ public class BranchAndBound {
 		LocalTime currTime = tsp.getStartTime();
 		// Thêm bestEndTime
 		bestEndTime = LocalTime.parse("23:59");
-		// Đặt vị trí xét điểm tiếp theo
+		// Đặt vị trí xét điểm hiện tại
 		int index = 1;
 		//Gọi hàm giải
 		TSPRecursive(tsp, visisted, currentPath, crpoint, currTime, strpoint, index);
